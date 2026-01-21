@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="FindMyMeds.Core/FindMyMeds.Core.csproj" />
   <Project Path="FindMyMeds.Infrastructure/FindMyMeds.Infrastructure.csproj" />
   <Project Path="FindMyMeds.Services/FindMyMeds.Services.csproj" />
