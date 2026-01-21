@@ -132,6 +132,8 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     await RoleSeeder.SeedAsync(services);
+    var dbContext = services.GetRequiredService<ApplicationDbContext>();
+    await MedicationSeeder.SeedAsync(dbContext);
 
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 

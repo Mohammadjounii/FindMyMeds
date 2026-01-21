@@ -57,7 +57,8 @@ namespace FindMyMeds.Services.Background
                                 {
                                     UserId = ownerId,
                                     MedicationId = medicationId,
-                                    Message = $"Low stock: {pm.Medication.Name} (Qty: {pm.Quantity})"
+                                    Message = $"Low stock: {pm.Medication.Name} (Qty: {pm.Quantity})",
+                                    IsRead = false
                                 });
                             }
                             else
