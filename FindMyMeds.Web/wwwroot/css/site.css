@@ -1,0 +1,645 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+}
+/* ============================= */
+/* SETTINGS / PROFILE STYLES     */
+/* ============================= */
+
+.card-box {
+    background: white;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 14px 35px rgba(46,125,111,0.08);
+}
+
+.btn-primary-soft {
+    background: #e6f4f1;
+    color: #2e7d6f;
+    border-radius: 30px;
+    padding: 10px 22px;
+    font-weight: 600;
+    border: none;
+}
+
+    .btn-primary-soft:hover {
+        background: #d7efea;
+        color: #256b5f;
+    }
+
+.profile-icon {
+    font-size: 3rem;
+    color: #2e7d6f;
+}
+
+/* ============================= */
+/* AUTH PAGES (LOGIN / REGISTER) */
+/* ============================= */
+
+.login-card {
+    background: white;
+    border-radius: 22px;
+    padding: 32px 28px;
+    box-shadow: 0 20px 45px rgba(46,125,111,0.12);
+}
+
+.login-icon {
+    font-size: 2.8rem;
+    color: #2e7d6f;
+}
+
+.btn-login {
+    background: #2e7d6f;
+    color: white;
+    border-radius: 30px;
+    padding: 12px;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+    .btn-login:hover {
+        background: #256b5f;
+        box-shadow: 0 10px 25px rgba(46,125,111,0.35);
+    }
+
+.input-group-text {
+    background: #f1f7f6;
+    border: none;
+    color: #2e7d6f;
+}
+
+.form-control {
+    border-radius: 12px;
+}
+/* ===== SELECT2 FIX FOR BOOTSTRAP 5 ===== */
+
+.select2-container {
+    width: 100% !important;
+    z-index: 1055;
+}
+
+.select2-container--default .select2-selection--single {
+    height: 38px;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: center;
+}
+
+.select2-selection__rendered {
+    line-height: 36px !important;
+    padding-left: 12px !important;
+    color: #212529;
+}
+
+.select2-selection__arrow {
+    height: 36px;
+}
+
+.select2-dropdown {
+    z-index: 1060;
+}
+.list-clean {
+    padding-left: 1.2rem;
+}
+
+    .list-clean li {
+        margin-bottom: 0.4rem;
+    }
+/* =========================
+   THEME MODES
+   ========================= */
+/* =========================
+   THEME MODES – BRAND SAFE
+   ========================= */
+
+.light-mode {
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+}
+
+/* =========================
+   DARK MODE (Green Medical)
+   ========================= */
+/* =========================
+   DARK MODE – FULL FIX
+   ========================= */
+
+.dark-mode {
+    background-color: #0f1c1a;
+    color: #e6f4f1;
+}
+
+    /* GENERAL TEXT */
+    .dark-mode h1,
+    .dark-mode h2,
+    .dark-mode h3,
+    .dark-mode h4,
+    .dark-mode h5,
+    .dark-mode h6,
+    .dark-mode p,
+    .dark-mode span,
+    .dark-mode label {
+        color: #e6f4f1;
+    }
+
+    .dark-mode .text-muted {
+        color: #a7cfc7 !important;
+    }
+
+    /* NAVBAR */
+    .dark-mode .navbar {
+        background-color: #0f2a26 !important;
+        border-bottom: 1px solid #1f4f49;
+    }
+
+    .dark-mode .navbar-brand {
+        color: #7fe1d1 !important;
+    }
+
+    .dark-mode .nav-link {
+        color: #e6f4f1 !important;
+    }
+
+        .dark-mode .nav-link:hover {
+            color: #7fe1d1 !important;
+        }
+
+    /* CTA BUTTONS */
+    .dark-mode .btn-cta,
+    .dark-mode .btn-primary,
+    .dark-mode .btn-login {
+        background-color: #2e7d6f;
+        color: #ffffff !important;
+        border: none;
+    }
+
+        .dark-mode .btn-cta:hover,
+        .dark-mode .btn-primary:hover,
+        .dark-mode .btn-login:hover {
+            background-color: #256b5f;
+        }
+
+    /* HERO SECTION (IMPORTANT FIX) */
+    .dark-mode .hero,
+    .dark-mode .hero-section,
+    .dark-mode .page-header {
+        background: linear-gradient(135deg, #1a4d45, #0f2a26) !important;
+        color: #e6f4f1;
+    }
+
+    /* SEARCH / FILTER PANELS */
+    .dark-mode .search-box,
+    .dark-mode .filter-box,
+    .dark-mode .card,
+    .dark-mode .card-box,
+    .dark-mode .login-card {
+        background-color: #132f2b;
+        color: #e6f4f1;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+    }
+
+    /* EMPTY STATE / RESULTS PANEL */
+    .dark-mode .empty-state,
+    .dark-mode .results-placeholder {
+        background-color: #132f2b;
+        color: #a7cfc7;
+    }
+
+    /* INPUTS / SELECTS */
+    .dark-mode .form-control,
+    .dark-mode select,
+    .dark-mode textarea {
+        background-color: #0f2a26;
+        color: #e6f4f1;
+        border: 1px solid #1f4f49;
+    }
+
+        .dark-mode .form-control::placeholder {
+            color: #a7cfc7;
+        }
+
+    /* SELECT2 */
+    .dark-mode .select2-selection {
+        background-color: #0f2a26 !important;
+        border: 1px solid #1f4f49 !important;
+        color: #e6f4f1 !important;
+    }
+
+    .dark-mode .select2-selection__rendered {
+        color: #e6f4f1 !important;
+    }
+
+    /* TABLES */
+    .dark-mode .table {
+        color: #e6f4f1;
+    }
+
+        .dark-mode .table th {
+            color: #7fe1d1;
+        }
+
+        .dark-mode .table td,
+        .dark-mode .table th {
+            border-color: #1f4f49;
+        }
+
+    /* FOOTER */
+    .dark-mode footer {
+        background-color: #0f2a26;
+        border-top: 1px solid #1f4f49;
+        color: #a7cfc7;
+    }
+
+        .dark-mode footer a {
+            color: #7fe1d1;
+        }
+
+    /* ICONS */
+    .dark-mode i,
+    .dark-mode .profile-icon,
+    .dark-mode .login-icon {
+        color: #7fe1d1;
+    }
+    /* =========================
+   DARK MODE – FEATURE CARDS FIX
+   ========================= */
+
+    /* Feature / Info cards */
+    .dark-mode .feature-card,
+    .dark-mode .feature-item,
+    .dark-mode .icon-card,
+    .dark-mode .info-card {
+        background-color: #132f2b !important;
+        color: #e6f4f1 !important;
+        box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+    }
+
+        /* Feature titles */
+        .dark-mode .feature-card h3,
+        .dark-mode .feature-item h3,
+        .dark-mode .info-card h3 {
+            color: #eaf7f4 !important;
+        }
+
+        /* Feature descriptions */
+        .dark-mode .feature-card p,
+        .dark-mode .feature-item p,
+        .dark-mode .info-card p {
+            color: #a7cfc7 !important;
+        }
+
+        /* Icon circles */
+        .dark-mode .feature-card .icon,
+        .dark-mode .feature-item .icon,
+        .dark-mode .info-card .icon {
+            background-color: #0f2a26 !important;
+            color: #7fe1d1 !important;
+        }
+    /* =====================================================
+   DARK MODE – FORCE ALL FEATURE / INFO CARDS
+   ===================================================== */
+
+    /* Any rounded white feature-like container */
+    .dark-mode div[class*="card"],
+    .dark-mode div[class*="feature"],
+    .dark-mode div[class*="info"] {
+        background-color: #132f2b !important;
+        color: #e6f4f1 !important;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+    }
+
+        /* Headings inside those boxes */
+        .dark-mode div[class*="card"] h3,
+        .dark-mode div[class*="feature"] h3,
+        .dark-mode div[class*="info"] h3 {
+            color: #eaf7f4 !important;
+        }
+
+        /* Paragraph text */
+        .dark-mode div[class*="card"] p,
+        .dark-mode div[class*="feature"] p,
+        .dark-mode div[class*="info"] p {
+            color: #a7cfc7 !important;
+        }
+
+    /* Icon containers (rounded squares) */
+    .dark-mode div[class*="icon"],
+    .dark-mode span[class*="icon"] {
+        background-color: #0f2a26 !important;
+        color: #7fe1d1 !important;
+    }
+
+    /* SVG / Bootstrap icons */
+    .dark-mode i,
+    .dark-mode svg {
+        color: #7fe1d1 !important;
+    }
+    /* =====================================================
+   DARK MODE – CONTENT SECTIONS FIX (FINAL)
+   ===================================================== */
+
+    /* Generic light sections */
+    .dark-mode section,
+    .dark-mode .section,
+    .dark-mode .section-light,
+    .dark-mode .bg-light {
+        background: linear-gradient(180deg, #0f1c1a, #0f2a26) !important;
+        color: #e6f4f1 !important;
+    }
+
+        /* Section headings */
+        .dark-mode section h1,
+        .dark-mode section h2,
+        .dark-mode section h3 {
+            color: #eaf7f4 !important;
+        }
+
+        /* Section text */
+        .dark-mode section p,
+        .dark-mode section span,
+        .dark-mode section li {
+            color: #a7cfc7 !important;
+        }
+
+        /* Icons / bullets inside sections */
+        .dark-mode section i,
+        .dark-mode section svg {
+            color: #7fe1d1 !important;
+        }
+    /* =====================================================
+   DARK MODE – PAGE HEADERS & SETTINGS (FINAL FIX)
+   ===================================================== */
+
+    /* Page titles + subtitles */
+    .dark-mode h1,
+    .dark-mode h2.page-title,
+    .dark-mode .page-title,
+    .dark-mode .page-subtitle {
+        color: #eaf7f4 !important;
+    }
+
+    .dark-mode .page-subtitle,
+    .dark-mode .subtitle,
+    .dark-mode .lead {
+        color: #a7cfc7 !important;
+    }
+
+    /* Large profile / header cards */
+    .dark-mode .profile-header,
+    .dark-mode .profile-card,
+    .dark-mode .header-card,
+    .dark-mode .card-box {
+        background: linear-gradient(135deg, #132f2b, #0f2a26) !important;
+        color: #e6f4f1 !important;
+        box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+    }
+
+        /* Email / small text inside header cards */
+        .dark-mode .profile-header p,
+        .dark-mode .profile-card p,
+        .dark-mode .card-box p {
+            color: #a7cfc7 !important;
+        }
+
+    /* Settings / management section cards */
+    .dark-mode .settings-card,
+    .dark-mode .management-card,
+    .dark-mode .settings-section,
+    .dark-mode .pharmacy-management {
+        background-color: #132f2b !important;
+        color: #e6f4f1 !important;
+    }
+
+        /* Icons inside settings */
+        .dark-mode .settings-card i,
+        .dark-mode .management-card i {
+            color: #7fe1d1 !important;
+        }
+    /* =====================================================
+   DARK MODE – FINAL TEXT & LIST FIX
+   ===================================================== */
+
+    /* Page titles (Search, Lists, Headers) */
+    .dark-mode h1,
+    .dark-mode h2,
+    .dark-mode .page-title {
+        color: #eaf7f4 !important;
+    }
+
+    /* Page subtitles */
+    .dark-mode .page-subtitle,
+    .dark-mode .subtitle,
+    .dark-mode .lead {
+        color: #a7cfc7 !important;
+    }
+
+    /* Registered pharmacies / list items */
+    .dark-mode .list-group-item,
+    .dark-mode li,
+    .dark-mode .pharmacy-item,
+    .dark-mode .rounded-box {
+        background-color: #132f2b !important;
+        color: #e6f4f1 !important;
+        border-color: #1f4f49 !important;
+    }
+
+        /* Hover (if clickable) */
+        .dark-mode .list-group-item:hover,
+        .dark-mode .pharmacy-item:hover {
+            background-color: #1b433e !important;
+        }
+    /* =====================================================
+   DARK MODE – SEARCH AREA POLISH (FINAL)
+   ===================================================== */
+
+    /* Search container */
+    .dark-mode .search-box,
+    .dark-mode .search-panel,
+    .dark-mode .filter-panel {
+        background: linear-gradient( 180deg, #163a36, #132f2b ) !important;
+        border: 1px solid #1f4f49;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(127, 225, 209, 0.08);
+        border-radius: 22px;
+    }
+
+        /* Labels */
+        .dark-mode .search-box label,
+        .dark-mode .filter-panel label {
+            color: #cfeee8 !important;
+            font-weight: 500;
+        }
+
+        /* Inputs & selects inside search */
+        .dark-mode .search-box .form-control,
+        .dark-mode .search-box select,
+        .dark-mode .filter-panel .form-control,
+        .dark-mode .filter-panel select {
+            background-color: #0f2a26;
+            color: #e6f4f1;
+            border: 1px solid #1f4f49;
+            border-radius: 14px;
+        }
+
+            /* Input focus */
+            .dark-mode .search-box .form-control:focus,
+            .dark-mode .filter-panel .form-control:focus {
+                border-color: #7fe1d1;
+                box-shadow: 0 0 0 0.15rem rgba(127, 225, 209, 0.25);
+            }
+
+            /* Placeholder text */
+            .dark-mode .search-box .form-control::placeholder {
+                color: #9fd6cb;
+            }
+    /* =====================================================
+   DARK MODE – QUANTITY / BADGE FIX
+   ===================================================== */
+
+    /* Quantity pills / badges */
+    .dark-mode .badge,
+    .dark-mode .quantity,
+    .dark-mode .quantity-badge,
+    .dark-mode .pill {
+        background-color: #e6f4f1 !important;
+        color: #0f2a26 !important;
+        font-weight: 600;
+    }
+
+    /* If quantity is inside a span or small tag */
+    .dark-mode span,
+    .dark-mode small {
+        color: #e6f4f1;
+    }
+    /* =====================================================
+   DARK MODE – FORCE TEXT VISIBILITY IN PILLS / BOXES
+   ===================================================== */
+
+    /* Any text inside white/light rounded boxes */
+    .dark-mode .rounded,
+    .dark-mode .rounded-pill,
+    .dark-mode .rounded-box,
+    .dark-mode .pill,
+    .dark-mode .badge,
+    .dark-mode .quantity-badge {
+        background-color: #e6f4f1 !important;
+    }
+
+        /* FORCE text inside them */
+        .dark-mode .rounded *,
+        .dark-mode .rounded-pill *,
+        .dark-mode .rounded-box *,
+        .dark-mode .pill *,
+        .dark-mode .badge *,
+        .dark-mode .quantity-badge * {
+            color: #0f2a26 !important;
+            font-weight: 600;
+        }
+    /* =====================================================
+   DARK MODE – QUANTITY BADGE (FINAL FIX)
+   ===================================================== */
+
+    .dark-mode .badge-qty {
+        background-color: #e6f4f1 !important; /* light pill */
+        color: #0f2a26 !important; /* dark readable text */
+        font-weight: 700;
+    }
+    /* =====================================================
+   DARK MODE – LIVE SEARCH "NO RESULTS" FIX
+   ===================================================== */
+
+    .dark-mode #liveResults .no-results {
+        color: #a7cfc7; /* readable soft green */
+    }
+
+        /* Text */
+        .dark-mode #liveResults .no-results p {
+            color: #a7cfc7 !important;
+            font-size: 1rem;
+        }
+
+        /* Icon */
+        .dark-mode #liveResults .no-results i {
+            color: #7fe1d1 !important;
+        }
+/* =========================
+   DARK MODE TOGGLE BUTTON
+   ========================= */
+
+#themeToggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    background: #f1f7f6;
+    color: #2e7d6f;
+    border: 1.5px solid rgba(46, 125, 111, 0.35);
+    box-shadow: 0 4px 14px rgba(46, 125, 111, 0.18);
+    transition: all 0.25s ease;
+}
+
+    /* Hover */
+    #themeToggle:hover {
+        background: #e6f4f1;
+        box-shadow: 0 6px 20px rgba(46, 125, 111, 0.28);
+        transform: translateY(-1px);
+    }
+
+    /* Active (click) */
+    #themeToggle:active {
+        transform: translateY(0);
+        box-shadow: 0 3px 10px rgba(46, 125, 111, 0.2);
+    }
+
+    /* Icon size consistency */
+    #themeToggle i,
+    #themeToggle span {
+        font-size: 0.95rem;
+    }
+.dark-mode #themeToggle {
+    background: #132f2b;
+    color: #7fe1d1;
+    border-color: #1f4f49;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+    .dark-mode #themeToggle:hover {
+        background: #163a36;
+    }
+/* =========================
+   STATUS BADGES
+   ========================= */
+
+/* Approved status */
+.status-approved {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    background-color: #2e7d6f; /* brand green */
+    color: #ffffff;
+}
+
+    /* Optional: hover polish */
+    .status-approved:hover {
+        background-color: #256b5f;
+    }

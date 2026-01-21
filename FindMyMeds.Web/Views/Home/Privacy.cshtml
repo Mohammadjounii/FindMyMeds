@@ -1,0 +1,152 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<style>
+    .policy-hero {
+        background: linear-gradient(135deg, #2e7d6f, #4db6ac);
+        color: white;
+        padding: 90px 20px 110px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .policy-hero::after {
+            content: "";
+            position: absolute;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120%;
+            height: 160px;
+            background: #f9fbfa;
+            border-radius: 50%;
+        }
+
+        .policy-hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+        }
+
+        .policy-hero p {
+            font-size: 1.15rem;
+            margin-top: 15px;
+            opacity: 0.95;
+        }
+
+    .policy-wrapper {
+        background: linear-gradient(180deg, #f9fbfa, #eef7f4);
+        padding: 120px 0;
+        margin-top: -60px;
+    }
+
+    .policy-card {
+        background: white;
+        border-radius: 28px;
+        padding: 45px 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 20px 40px rgba(46,125,111,0.08);
+        transition: transform .3s ease;
+    }
+
+        .policy-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .policy-card h5 {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        .policy-card p,
+        .policy-card li {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+    .policy-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+        .policy-list li {
+            margin-bottom: 10px;
+        }
+
+        .policy-list i {
+            color: #2e7d6f;
+            margin-right: 8px;
+        }
+</style>
+
+<section class="policy-hero">
+    <h1>@ViewData["Title"]</h1>
+    <p>Your privacy and data security are important to us</p>
+</section>
+
+<section class="policy-wrapper">
+    <div class="container">
+
+        <div class="policy-card">
+            <h5><i class="bi bi-info-circle"></i> Overview</h5>
+            <p>
+                Find My Meds is committed to protecting your personal information.
+                This Privacy Policy explains how we collect, use, and safeguard data
+                when you use our platform.
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h5><i class="bi bi-database"></i> Information We Collect</h5>
+            <ul class="policy-list">
+                <li><i class="bi bi-check-circle"></i> Basic account details (name, email)</li>
+                <li><i class="bi bi-check-circle"></i> Medication search activity</li>
+                <li><i class="bi bi-check-circle"></i> Pharmacy-provided availability data</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h5><i class="bi bi-gear"></i> How We Use Data</h5>
+            <ul class="policy-list">
+                <li><i class="bi bi-check-circle"></i> Display accurate medication availability</li>
+                <li><i class="bi bi-check-circle"></i> Improve system performance</li>
+                <li><i class="bi bi-check-circle"></i> Support communication with pharmacies</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h5><i class="bi bi-shield-lock"></i> Data Protection</h5>
+            <p>
+                We apply appropriate security measures to prevent unauthorized access,
+                loss, or misuse of personal data.
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h5><i class="bi bi-box-arrow-up-right"></i> Third-Party Services</h5>
+            <p>
+                Find My Meds does not sell or share personal data for commercial purposes.
+                Any third-party services are used strictly for essential functionality.
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h5><i class="bi bi-arrow-repeat"></i> Policy Updates</h5>
+            <p>
+                This policy may be updated periodically. Any changes will be reflected on this page.
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h5><i class="bi bi-envelope"></i> Contact</h5>
+            <p>
+                If you have any questions about this Privacy Policy, please contact us through the platform.
+            </p>
+        </div>
+
+    </div>
+</section>

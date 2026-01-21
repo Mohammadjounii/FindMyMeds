@@ -1,0 +1,26 @@
+﻿@model FindMyMeds.Core.Entities.PharmacyMedication
+@{
+    var pharmacy = ViewBag.Pharmacy as FindMyMeds.Core.Entities.Pharmacy;
+    ViewData["Title"] = "Delete Inventory Item";
+}
+
+<div class="card-box text-center">
+    <h4 class="text-danger">Delete Inventory Item</h4>
+
+    <p>
+        Are you sure you want to remove this medication from
+        <strong>@pharmacy.Name</strong>?
+    </p>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <button class="btn btn-danger">Delete</button>
+        <a asp-controller="Pharmacies"
+           asp-action="Dashboard"
+           class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+
+    </form>
+</div>

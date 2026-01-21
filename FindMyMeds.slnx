@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="FindMyMeds.Core/FindMyMeds.Core.csproj" />
+  <Project Path="FindMyMeds.Infrastructure/FindMyMeds.Infrastructure.csproj" />
+  <Project Path="FindMyMeds.Services/FindMyMeds.Services.csproj" />
+  <Project Path="FindMyMeds.Tests/FindMyMeds.Tests.csproj" Id="4d874d75-e4bc-4663-b076-0fc8554f6e92" />
+  <Project Path="FindMyMeds.Web/FindMyMeds.Web.csproj" />
+</Solution>

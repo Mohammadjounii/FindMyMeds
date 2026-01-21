@@ -1,0 +1,25 @@
+﻿@model List<FindMyMeds.Core.DTOs.MedicationSubstituteDto>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="text-muted">No substitutes listed.</div>
+}
+else
+{
+    <ul class="list-group list-group-flush">
+        @foreach (var s in Model)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    <strong>@s.Name</strong>
+                   
+                </span>
+                <a class="btn btn-sm btn-outline-primary"
+                   href="@Url.Action("Search", "Medications", new { q = s.Name })">
+                    Search
+                </a>
+
+            </li>
+        }
+    </ul>
+}

@@ -1,0 +1,244 @@
+﻿@model FindMyMeds.Core.Identity.ApplicationUser
+
+@{
+    ViewData["Title"] = "Settings";
+    var role = ViewBag.Role as string ?? "User";
+}
+
+<style>
+    .fade-in {
+        animation: fadeInUp .7s ease forwards;
+        opacity: 0;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+
+
+    .card-box {
+        background: linear-gradient(145deg, #ffffff, #f7faf9);
+        border-radius: 26px;
+        padding: 30px;
+        box-shadow: 0 18px 40px rgba(46,125,111,.08);
+        margin-bottom: 30px;
+        transition: transform .35s ease, box-shadow .35s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .card-box::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient( 135deg, rgba(46,125,111,.08), rgba(255,255,255,0) );
+            opacity: 0;
+            transition: opacity .35s ease;
+            pointer-events: none; 
+        }
+
+
+
+        .card-box:hover::before {
+            opacity: 1;
+        }
+
+        .card-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 70px rgba(46,125,111,.18);
+        }
+
+    .profile-icon {
+        font-size: 3.2rem;
+        color: #2e7d6f;
+        margin-bottom: 6px;
+    }
+
+    .btn-primary-soft {
+        background: linear-gradient(135deg, #2e7d6f, #22c55e);
+        color: white;
+        border-radius: 30px;
+        padding: 10px 26px;
+        font-weight: 600;
+        border: none;
+        transition: all .3s ease;
+        box-shadow: 0 10px 25px rgba(46,125,111,.35);
+    }
+
+        .btn-primary-soft:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px rgba(46,125,111,.45);
+            opacity: .95;
+        }
+
+    h4 {
+        font-weight: 600;
+    }
+
+  
+    .list-group-item {
+        border-radius: 14px;
+        margin-bottom: 8px;
+        transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+        .list-group-item:hover {
+            transform: translateX(6px);
+            box-shadow: 0 10px 25px rgba(0,0,0,.08);
+        }
+
+   
+    .btn-primary-custom {
+        background: white;
+        color: #2e7d6f;
+        padding: 14px 34px;
+        border-radius: 50px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.18);
+    }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+            background: #f4fffd;
+        }
+
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-9">
+
+        <div class="card-box text-center fade-in" style="animation-delay:.05s">
+            <i class="bi bi-person-circle profile-icon"></i>
+            <h5 class="mb-1">@Model.Email</h5>
+
+            <span class="badge
+                @(role == "Admin" ? "bg-danger" :
+                                    role == "Pharmacy" ? "bg-success" : "bg-secondary")">
+                @role Account
+            </span>
+
+            <p class="text-muted mt-2 mb-0">
+                Manage your account settings and preferences
+            </p>
+        </div>
+
+        <div class="card-box fade-in" style="animation-delay:.15s">
+            <h4 class="mb-3">🧑 Profile Information</h4>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p class="text-muted mb-0">
+                Profile details are securely managed by the system.
+            </p>
+        </div>
+
+   
+        @if (role != "Admin")
+        {
+            <div class="card-box fade-in" style="animation-delay:.25s">
+                <h4 class="mb-3">🏪 Pharmacy Management</h4>
+
+                @if ((ViewBag.Pharmacies as List<FindMyMeds.Core.Entities.Pharmacy>)?.Any() == true)
+                {
+                    <p class="text-muted">Your registered pharmacies:</p>
+                    <ul class="list-group mb-3">
+                        @foreach (var pharmacy in ViewBag.Pharmacies)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>@pharmacy.Name</span>
+
+                                @if (pharmacy.IsApproved)
+                                {
+                                    <a asp-controller="PharmacyMedications"
+                                       asp-action="Index"
+                                       asp-route-pharmacyId="@pharmacy.Id"
+                                       class="btn btn-sm btn-outline-success">
+                                        Manage Inventory
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        Pending Approval
+                                    </span>
+                                }
+                            </li>
+
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-muted">
+                        You don’t have any registered pharmacies yet.
+                    </p>
+                }
+                <a asp-controller="Pharmacies"
+                   asp-action="Create"
+                   class="btn btn-primary-custom mt-2">
+                    <i class="bi bi-plus-circle"></i> Register New Pharmacy
+                </a>
+
+            </div>
+        }
+
+        @if (role == "Admin")
+        {
+            <div class="card-box fade-in" style="animation-delay:.25s">
+                <h4 class="mb-3">⚠️ Admin Tools</h4>
+
+                <div class="d-grid gap-2 d-md-flex">
+                    <a asp-controller="Pharmacies"
+                       asp-action="Index"
+                       class="btn btn-outline-primary">
+                        🏪 Manage Pharmacies
+                    </a>
+
+                    <a asp-controller="Reports"
+                       asp-action="Index"
+                       class="btn btn-outline-dark">
+                        📊 View Reports
+                    </a>
+                </div>
+
+                <p class="text-muted mt-3 mb-0">
+                    Administrative tools and system analytics
+                </p>
+            </div>
+        }
+
+        <div class="card-box fade-in" style="animation-delay:.35s">
+            <h4 class="mb-3">🔐 Account</h4>
+
+            <div class="d-flex gap-2 flex-wrap">
+                <a asp-controller="Account"
+                   asp-action="ChangePassword"
+                   class="btn btn-outline-secondary">
+                    Change Password
+                </a>
+
+
+                <form asp-controller="Account"
+                      asp-action="Logout"
+                      method="post">
+                    <button class="btn btn-outline-danger">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+ 

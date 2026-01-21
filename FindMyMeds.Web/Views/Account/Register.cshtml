@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+
+        <div class="card-box">
+            <h3 class="mb-3">Create Account</h3>
+
+            <form method="post">
+
+                <input name="fullName"
+                       class="form-control mb-3"
+                       placeholder="Full Name"
+                       required />
+
+
+                <input name="email"
+                       class="form-control mb-3"
+                       placeholder="Email"
+                       required />
+
+                <input name="password"
+                       type="password"
+                       class="form-control mb-3"
+                       placeholder="Password"
+                       required />
+
+                <button class="btn btn-primary-soft w-100">
+                    Create Account
+                </button>
+            </form>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="text-danger mt-3">@ViewBag.Error</div>
+            }
+        </div>
+
+    </div>
+</div>

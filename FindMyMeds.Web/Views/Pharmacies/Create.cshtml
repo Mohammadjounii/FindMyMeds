@@ -1,0 +1,35 @@
+﻿@model FindMyMeds.Core.Entities.Pharmacy
+@{
+    ViewData["Title"] = "Create Pharmacy";
+}
+
+<div class="card-box">
+    <h3 class="page-title">Create Pharmacy</h3>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label">Pharmacy Logo</label>
+            <input type="file"
+                   name="Logo"
+                   class="form-control"
+                   accept="image/*" />
+            <small class="text-muted">PNG or JPG – optional</small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">City</label>
+            <input asp-for="City" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+
+        <button class="btn btn-primary-soft">Save</button>
+    </form>
+</div>

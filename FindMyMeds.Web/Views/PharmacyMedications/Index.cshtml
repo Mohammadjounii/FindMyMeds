@@ -1,0 +1,125 @@
+﻿@model List<FindMyMeds.Core.ViewModels.PharmacyMedicationViewModel>
+
+@{
+    var pharmacy = ViewBag.Pharmacy as FindMyMeds.Core.Entities.Pharmacy;
+    ViewData["Title"] = "Inventory";
+}
+
+<div class="card-box mb-4">
+    <div class="d-flex align-items-center gap-4">
+        @if (!string.IsNullOrEmpty(pharmacy?.LogoPath))
+        {
+            <img src="@pharmacy.LogoPath"
+                 alt="Pharmacy Logo"
+                 class="rounded shadow-sm"
+                 style="height:90px;width:auto;" />
+        }
+
+        <div>
+            <h2 class="page-title mb-1">@pharmacy?.Name</h2>
+
+            <p class="sub-text mb-0">
+                <i class="bi bi-geo-alt"></i> @pharmacy?.City
+            </p>
+
+            @if (!string.IsNullOrWhiteSpace(pharmacy?.Phone))
+            {
+                <div class="mt-1">
+                    <i class="bi bi-telephone"></i>
+                    <strong>@pharmacy.Phone</strong>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="fw-semibold">Inventory</h5>
+
+    <a class="btn btn-primary-soft"
+       asp-controller="PharmacyMedications"
+       asp-action="Create"
+       asp-route-pharmacyId="@pharmacy?.Id">
+        <i class="bi bi-plus-circle"></i> Add Medication
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="card-box text-center text-muted">
+        <i class="bi bi-capsule fs-1 mb-3"></i>
+        <p>No medications added yet.</p>
+    </div>
+}
+else
+{
+    <div class="card-box">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Medication</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="@(item.IsExpired ? "expired-row" : "")">
+                        <td>
+                            @item.MedicationName
+
+                            @if (item.IsExpired)
+                            {
+                                <span class="badge bg-danger ms-2">
+                                    EXPIRED
+                                </span>
+                            }
+                    </td>
+
+                    <td>@item.Quantity</td>
+
+                    <td>
+                        @(item.Price.HasValue
+                                            ? item.Price.Value.ToString("0.00")
+                                            : "—")
+                        </td>
+
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-secondary"
+                               asp-action="Edit"
+                               asp-route-id="@item.Id">
+                                Edit
+                            </a>
+
+                            <a class="btn btn-sm btn-outline-danger"
+                               asp-action="Delete"
+                               asp-route-id="@item.Id">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<a asp-controller="Pharmacies"
+   asp-action="Dashboard"
+   class="btn btn-outline-secondary mt-3">
+    ← Back to My Pharmacies
+</a>
+
+<style>
+    .expired-row {
+        background-color: #ffe5e5;
+    }
+
+        .expired-row td {
+            color: #b00020;
+            font-weight: 600;
+        }
+</style>

@@ -1,0 +1,241 @@
+﻿
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - FindMyMeds</title>
+
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+        <style>
+            :root {
+                --primary: #2e7d6f;
+                --primary-soft: #e6f4f1;
+                --bg-main: #f9fbfa;
+                --text-dark: #1f2937;
+                --text-muted: #6b7280;
+            }
+
+            body {
+                background-color: var(--bg-main);
+                color: var(--text-dark);
+            }
+
+            .navbar {
+                background: white;
+                border-bottom: 1px solid #eef2f1;
+                padding: 16px 0;
+            }
+
+            .navbar-brand {
+                font-weight: 700;
+                font-size: 1.3rem;
+                color: var(--primary) !important;
+                letter-spacing: -0.5px;
+            }
+
+                .navbar-brand i {
+                    margin-right: 6px;
+                }
+
+            .nav-link {
+                font-weight: 500;
+                color: var(--text-dark) !important;
+                margin-right: 6px;
+                transition: all 0.25s ease;
+            }
+
+                .nav-link:hover {
+                    color: var(--primary) !important;
+                }
+
+                .nav-link.btn-cta {
+                    background: var(--primary);
+                    color: white !important;
+                    padding: 8px 18px;
+                    border-radius: 30px;
+                    margin-left: 10px;
+                    box-shadow: 0 6px 18px rgba(46,125,111,0.25);
+                }
+
+                    .nav-link.btn-cta:hover {
+                        background: #256b5f;
+                        box-shadow: 0 10px 30px rgba(46,125,111,0.35);
+                    }
+
+            main {
+                padding-top: 40px;
+            }
+
+            footer {
+                background: white;
+                border-top: 1px solid #eef2f1;
+                padding: 25px 0;
+                font-size: 0.9rem;
+                color: var(--text-muted);
+            }
+
+                footer a {
+                    color: var(--primary);
+                    text-decoration: none;
+                }
+
+                    footer a:hover {
+                        text-decoration: underline;
+                    }
+        </style>
+    </head>
+
+    <body class="d-flex flex-column min-vh-100">
+
+        <header>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+
+                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-heart-pulse-fill"></i> FindMyMeds
+                    </a>
+
+                    <button class="navbar-toggler" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#mainNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="mainNavbar">
+
+    
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Medications" asp-action="Search">Find Meds</a>
+                            </li>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       asp-controller="Pharmacies"
+                                       asp-action="Index">
+                                        Manage Pharmacies
+                                    </a>
+                                </li>
+                            }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Reports" asp-action="Index">
+                                    Reports
+                                </a>
+                            </li>
+                        }
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <button id="themeToggle"
+                                    type="button"
+                                    class="btn btn-outline-secondary btn-sm ms-2">
+                                🌙 Dark Mode
+                            </button>
+                        }
+
+
+
+                        </ul>
+
+                    
+                        <ul class="navbar-nav align-items-lg-center">
+
+                            @if (User.Identity?.IsAuthenticated ?? false)
+                            {
+                                <li class="nav-item">
+                                @{
+                                    var username = User.Identity?.Name?.Split('@')[0];
+                                }
+
+                                <span class="nav-link text-muted">
+                                    Hello, @username
+                                </span>
+                                </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Settings"
+                                   asp-action="Index">
+                                    <i class="bi bi-gear"></i> Settings
+                                </a>
+                            </li>
+
+                                @if (User.IsInRole("Pharmacy"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link btn-cta"
+                                           asp-controller="Pharmacies"
+                                           asp-action="Dashboard">
+                                            My Pharmacy
+                                        </a>
+                                    </li>
+                                }
+
+                                <li class="nav-item">
+                                    <form asp-controller="Account"
+                                          asp-action="Logout"
+                                          method="post"
+                                          class="d-inline">
+                                        <button type="submit"
+                                                class="btn nav-link border-0 bg-transparent">
+                                            Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link btn-cta"
+                                       asp-controller="Account"
+                                       asp-action="Register">
+                                        Register
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+        <main class="flex-grow-1">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </main>
+
+        <footer class="mt-auto">
+            <div class="container text-center">
+                &copy; 2025 FindMyMeds ·
+                <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+    </html>

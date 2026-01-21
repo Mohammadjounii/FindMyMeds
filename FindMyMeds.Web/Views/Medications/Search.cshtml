@@ -1,0 +1,207 @@
+﻿@model List<FindMyMeds.Core.ViewModels.MedicationAvailabilityViewModel>
+
+@{
+    ViewData["Title"] = "Medication Search";
+}
+
+<style>
+    .search-header {
+        margin-bottom: 40px;
+    }
+
+        .search-header h2 {
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .search-header p {
+            color: #6b7280;
+        }
+
+    .search-box {
+        background: white;
+        padding: 28px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(46,125,111,0.08);
+        margin-bottom: 40px;
+    }
+
+        .search-box input,
+        .search-box select {
+            border-radius: 12px;
+            padding: 12px 14px;
+        }
+
+    .med-card {
+        background: white;
+        border-radius: 22px;
+        padding: 26px;
+        box-shadow: 0 18px 38px rgba(46,125,111,0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+        .med-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 60px rgba(46,125,111,0.15);
+        }
+
+    .med-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #1f2937;
+    }
+
+    .med-meta {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin-top: 4px;
+    }
+
+    .badge-qty {
+        background: #e6f4f1;
+        color: #2e7d6f;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .price {
+        font-weight: 700;
+        color: #2e7d6f;
+        font-size: 1.1rem;
+    }
+
+    .details-link {
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .no-results {
+        background: #f4f8f7;
+        border-radius: 18px;
+        padding: 40px;
+        text-align: center;
+        color: #6b7280;
+    }
+</style>
+
+<div class="search-header">
+    <h2>Search for a Medication</h2>
+    <p>Results update instantly as you type or change filters.</p>
+</div>
+
+<div class="search-box">
+    <div class="row g-3 align-items-end">
+
+        <div class="col-md-4">
+            <label class="form-label">Medication Name</label>
+            <input id="qInput"
+                   class="form-control"
+                   type="text"
+                   placeholder="e.g. Paracetamol"
+                   value="@Context.Request.Query["q"]" />
+
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">City</label>
+            <select id="citySelect" class="form-select">
+                <option value="All">All cities</option>
+                @foreach (var c in ViewBag.Cities as List<string>)
+                {
+                    <option value="@c">@c</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Sort By</label>
+            <select id="sortSelect" class="form-select">
+                <option value="name">A → Z</option>
+                <option value="lowprice">Price: Low → High</option>
+                <option value="highprice">Price: High → Low</option>
+                <option value="highqty">Quantity: High → Low</option>
+            </select>
+        </div>
+
+    </div>
+</div>
+
+<div id="liveResults">
+    <div class="no-results">
+        <i class="bi bi-search fs-1 mb-3"></i>
+        <p>Start typing to search for medications.</p>
+    </div>
+</div>
+
+<div class="modal fade" id="medDetailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content rounded-4">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">Medication Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="medDetailsBody"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let debounceTimer = null;
+
+        function triggerLiveSearch() {
+            const q = $("#qInput").val();
+            const city = $("#citySelect").val();
+            const sort = $("#sortSelect").val();
+
+            clearTimeout(debounceTimer);
+
+            debounceTimer = setTimeout(() => {
+                if (!q || q.trim().length === 0) {
+                    $("#liveResults").html(`
+                        <div class="no-results">
+                            <i class="bi bi-search fs-1 mb-3"></i>
+                            <p>Start typing to search for medications.</p>
+                        </div>
+                    `);
+                    return;
+                }
+
+                $.get("/Medications/LiveSearch", { q, city, sort }, function (data) {
+                    $("#liveResults").html(data);
+                });
+            }, 300);
+        }
+
+           $(document).ready(function () {
+            $("#qInput").on("keyup", triggerLiveSearch);
+            $("#citySelect").on("change", triggerLiveSearch);
+            $("#sortSelect").on("change", triggerLiveSearch);
+
+            if ($("#qInput").val().trim().length > 0) {
+                triggerLiveSearch();
+            }
+        });
+
+
+                function showMedicationDetails(medicationId, pharmacyId) {
+            $.get("/Medications/Details", {
+                id: medicationId,
+                pharmacyId: pharmacyId
+            }, function (data) {
+                $("#medDetailsBody").html(data);
+                new bootstrap.Modal(
+                    document.getElementById("medDetailsModal")
+                ).show();
+            });
+        }
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="~/js/medication-signalr.js"></script>
+
+}

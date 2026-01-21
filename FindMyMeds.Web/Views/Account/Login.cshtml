@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row justify-content-center align-items-center" style="min-height:70vh;">
+    <div class="col-md-5 col-lg-4">
+
+        <div class="login-card">
+
+            <div class="text-center mb-4">
+                <i class="bi bi-heart-pulse-fill login-icon"></i>
+                <h4 class="mt-2">Welcome Back</h4>
+                <p class="text-muted">Sign in to FindMyMeds</p>
+            </div>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger text-center">
+                    @ViewBag.Error
+                </div>
+            }
+
+            <form method="post">
+                <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+                <div class="form-group mb-3">
+                    <label class="form-label">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-envelope"></i>
+                        </span>
+                        <input name="email"
+                               type="email"
+                               class="form-control"
+                               placeholder="you@example.com"
+                               required />
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-lock"></i>
+                        </span>
+                        <input name="password"
+                               type="password"
+                               class="form-control"
+                               placeholder="••••••••"
+                               required />
+                    </div>
+                </div>
+
+                <button class="btn btn-login w-100 mt-2">
+                    Login
+                </button>
+
+            </form>
+
+            <div class="text-center mt-3">
+                <span class="text-muted">Don’t have an account?</span>
+                <a asp-action="Register" class="fw-semibold text-decoration-none">
+                    Register
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>

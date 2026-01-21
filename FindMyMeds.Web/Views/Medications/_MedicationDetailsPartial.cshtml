@@ -1,0 +1,95 @@
+﻿@model FindMyMeds.Core.DTOs.MedicationDetailsDto
+@using FindMyMeds.Core.DTOs
+
+<style>
+    .med-details {
+        padding: 10px 5px;
+    }
+
+    .med-title {
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #1f2937;
+        margin-bottom: 10px;
+    }
+
+    .med-badge {
+        display: inline-block;
+        background: #e6f4f1;
+        color: #2e7d6f;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .med-section {
+        margin-top: 18px;
+    }
+
+    .med-label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .med-text {
+        color: #6b7280;
+        line-height: 1.6;
+        background: #f9fbfa;
+        padding: 14px 16px;
+        border-radius: 14px;
+    }
+
+    .med-empty {
+        color: #9ca3af;
+        font-style: italic;
+        background: #f4f8f7;
+        padding: 14px 16px;
+        border-radius: 14px;
+    }
+</style>
+
+<div class="med-details">
+
+    <div class="med-title">
+        <i class="bi bi-capsule me-1"></i> @Model.Name
+    </div>
+
+    <div class="med-section">
+        <span class="med-label">
+            <i class="bi bi-info-circle me-1"></i> Description
+        </span>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <div class="med-text">
+                @Model.Description
+            </div>
+        }
+        else
+        {
+            <div class="med-empty">
+                No additional information available for this medication.
+            </div>
+        }
+    </div>
+
+    @if (ViewBag.Substitutes != null &&
+        ((List<MedicationSubstituteDto>)ViewBag.Substitutes).Any())
+    {
+        <hr />
+
+        <h6 class="mt-3 text-muted">
+            Substitutes available in this pharmacy
+        </h6>
+
+        @await Html.PartialAsync(
+        "_MedicationSubstitutesPartial",
+        (List<MedicationSubstituteDto>)ViewBag.Substitutes
+        )
+        }
+
+</div>

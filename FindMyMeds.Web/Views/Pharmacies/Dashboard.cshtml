@@ -1,0 +1,95 @@
+﻿@model List<FindMyMeds.Core.Entities.Pharmacy>
+
+@{
+    ViewData["Title"] = "My Pharmacies";
+
+    var notifications = ViewBag.Notifications
+        as List<FindMyMeds.Core.Entities.Notification>
+        ?? new();
+}
+
+<h2 class="mb-4">My Pharmacies</h2>
+
+@if (notifications.Any())
+{
+    <div class="alert alert-warning mb-4">
+        <strong>⚠ Low stock alerts</strong>
+        <ul class="mb-0">
+            @foreach (var n in notifications)
+            {
+                <li>@n.Message</li>
+            }
+        </ul>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        You have not registered any pharmacies yet.
+    </div>
+
+    <a asp-controller="Pharmacies"
+       asp-action="Create"
+       class="btn btn-primary-soft">
+        <i class="bi bi-plus-circle"></i> Register Pharmacy
+    </a>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var pharmacy in Model)
+        {
+            <div class="col-md-6">
+                <div class="card-box"
+                     data-pharmacy-id="@pharmacy.Id">
+
+                    <h4>@pharmacy.Name</h4>
+
+                    <p class="text-muted mb-2">
+                        <i class="bi bi-geo-alt"></i> @pharmacy.City
+                    </p>
+
+                    @if (pharmacy.IsApproved)
+                    {
+                        <span class="badge bg-success mb-3 approval-badge">
+                            Approved
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark mb-3 approval-badge">
+                            Pending
+                        </span>
+                    }
+
+                    <div class="mt-3 action-area">
+                        @if (pharmacy.IsApproved)
+                        {
+                            <a asp-controller="PharmacyMedications"
+                               asp-action="Index"
+                               asp-route-pharmacyId="@pharmacy.Id"
+                               class="btn btn-primary-soft manage-btn">
+                                Manage Inventory
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted waiting-text">
+                                Waiting for admin approval
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="mt-4">
+        <a asp-controller="Pharmacies"
+           asp-action="Create"
+           class="btn btn-outline-primary">
+            <i class="bi bi-plus-circle"></i> Register Another Pharmacy
+        </a>
+    </div>
+}

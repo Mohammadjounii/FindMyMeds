@@ -1,0 +1,133 @@
+﻿@model List<FindMyMeds.Core.Entities.Pharmacy>
+
+@{
+    ViewData["Title"] = "Manage Pharmacies";
+}
+
+<style>
+    .card-box {
+        background: white;
+        border-radius: 22px;
+        padding: 26px;
+        box-shadow: 0 18px 40px rgba(46,125,111,.08);
+        margin-bottom: 30px;
+    }
+
+    .page-title {
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .sub-text {
+        color: #6b7280;
+    }
+
+    .status-approved {
+        background: #e6f4f1;
+        color: #2e7d6f;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: .85rem;
+        font-weight: 600;
+    }
+
+    .status-pending {
+        background: #fff3cd;
+        color: #856404;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: .85rem;
+        font-weight: 600;
+    }
+
+    .table thead th {
+        background: #f4f8f7;
+        border: none;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+</style>
+
+<div class="card-box">
+    <h2 class="page-title">Manage Pharmacies</h2>
+    <p class="sub-text">
+        Review, approve, and manage all registered pharmacies.
+    </p>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="card-box text-center text-muted">
+        No pharmacies registered yet.
+    </div>
+}
+else
+{
+    <div class="card-box">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Owner</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ph in Model)
+                {
+                    <tr>
+                        <td><strong>@ph.Name</strong></td>
+                        <td>@ph.City</td>
+                        <td>
+                            @if (ph.OwnerUser != null)
+                            {
+                                @ph.OwnerUser.Email
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+                        <td>
+                            @if (ph.IsApproved)
+                            {
+                                <span class="status-approved">Approved</span>
+                            }
+                            else
+                            {
+                                <span class="status-pending">Pending</span>
+                            }
+                        </td>
+                        <td class="text-end">
+
+                            @if (!ph.IsApproved)
+                            {
+                                <a asp-action="Approve"
+                                   asp-route-id="@ph.Id"
+                                   class="btn btn-sm btn-success me-1">
+                                    <i class="bi bi-check-circle"></i> Approve
+                                </a>
+                            }
+
+                            <a asp-action="Edit"
+                               asp-route-id="@ph.Id"
+                               class="btn btn-sm btn-outline-secondary me-1">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@ph.Id"
+                               class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

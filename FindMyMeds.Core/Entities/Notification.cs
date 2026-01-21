@@ -1,0 +1,14 @@
+﻿using FindMyMeds.Core.Identity;
+
+namespace FindMyMeds.Core.Entities
+{
+    public class Notification
+    {
+        public int Id { get; set; }
+        public int MedicationId { get; set; }
+        public string UserId { get; set; } = null!;
+        public ApplicationUser User { get; set; } = null!;
+        public string Message { get; set; } = null!;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
+}

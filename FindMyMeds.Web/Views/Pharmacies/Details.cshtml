@@ -1,0 +1,64 @@
+﻿@model FindMyMeds.Core.Entities.Pharmacy
+@{
+    var stock = ViewBag.Inventory as List<FindMyMeds.Core.Entities.PharmacyMedication>;
+    ViewData["Title"] = "Pharmacy Details";
+}
+
+<div class="card-box">
+    @if (!string.IsNullOrEmpty(Model.LogoPath))
+    {
+        <img src="@Model.LogoPath"
+             class="img-fluid rounded"
+             style="max-height:120px"
+             alt="Pharmacy Logo" />
+    }
+    <h2 class="page-title">@Model.Name</h2>
+    <p class="sub-text">
+        <i class="bi bi-geo-alt"></i> @Model.City |
+        <i class="bi bi-telephone"></i> @Model.Phone
+    </p>
+</div>
+
+<div class="card-box">
+    <h5 class="fw-semibold mb-3">Available Medications</h5>
+
+    @if (stock != null && stock.Count > 0)
+    {
+        <table class="table" id="pharmacyInventoryTable">
+            <thead>
+                <tr>
+                    <th>Medication</th>
+                    <th>Quantity</th>
+                    <th>Expiry</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in stock)
+                {
+                    <tr>
+                        <td>@item.Medication?.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.ExpiryDate?.ToString("yyyy-MM-dd")</td>
+                        <td>@string.Format("{0:0.00}", item.Price)</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="text-muted">No medications currently available.</p>
+    }
+</div>
+
+<a href="@ViewBag.ReturnUrl"
+   class="btn btn-outline-secondary">
+    <i class="bi bi-arrow-left"></i> Back to results
+</a>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="~/js/pharmacy-details-signalr.js"></script>
+}

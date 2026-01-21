@@ -1,0 +1,50 @@
+﻿@model FindMyMeds.Core.Entities.Pharmacy
+@{
+    ViewData["Title"] = "Edit Pharmacy";
+}
+
+<div class="card-box">
+    <h3 class="page-title">Edit Pharmacy</h3>
+
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" type="hidden" />
+
+        @if (!string.IsNullOrEmpty(Model.LogoPath))
+        {
+            <div class="mb-3">
+                <label class="form-label">Current Logo</label><br />
+                <img src="@Model.LogoPath"
+                     class="rounded shadow-sm"
+                     style="max-height:120px;" />
+            </div>
+        }
+
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">City</label>
+            <input asp-for="City" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Change Pharmacy Logo</label>
+            <input type="file"
+                   name="Logo"
+                   class="form-control"
+                   accept="image/*" />
+            <small class="text-muted">
+                Leave empty to keep the current logo
+            </small>
+        </div>
+
+        <button class="btn btn-primary-soft">Save</button>
+    </form>
+</div>

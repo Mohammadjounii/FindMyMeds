@@ -1,0 +1,59 @@
+﻿@model FindMyMeds.Core.Entities.PharmacyMedication
+@{
+    var pharmacy = ViewBag.Pharmacy as FindMyMeds.Core.Entities.Pharmacy;
+    var meds = ViewBag.Medications as List<FindMyMeds.Core.DTOs.MedicationSearchDto>;
+    ViewData["Title"] = $"Edit Inventory - {pharmacy.Name}";
+}
+
+<div class="card-box">
+    <h3 class="page-title">Edit Inventory Item</h3>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="PharmacyId" />
+
+        <div class="mb-3">
+            <label class="form-label">Medication</label>
+            <select asp-for="MedicationId" class="form-select">
+                @foreach (var m in meds)
+                {
+                    <option value="@m.Id" selected="@(m.Id == Model.MedicationId)">
+                        @m.Name
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="MedicationId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Quantity</label>
+            <input asp-for="Quantity" type="number" min="0" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Expiry Date</label>
+            <input asp-for="ExpiryDate" type="date" class="form-control" />
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Price</label>
+            <input asp-for="Price" step="0.01" type="number" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <button class="btn btn-primary-soft">Update</button>
+        <a asp-controller="Pharmacies"
+           asp-action="Dashboard"
+           class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

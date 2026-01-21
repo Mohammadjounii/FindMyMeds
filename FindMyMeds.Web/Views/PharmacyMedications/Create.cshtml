@@ -1,0 +1,159 @@
+﻿@model FindMyMeds.Core.Entities.PharmacyMedication
+@using FindMyMeds.Core.DTOs
+
+@{
+    var pharmacy = ViewBag.Pharmacy as FindMyMeds.Core.Entities.Pharmacy;
+    var meds = ViewBag.Medications as List<MedicationSearchDto> ?? new();
+    ViewData["Title"] = $"Add Medication - {pharmacy?.Name}";
+}
+
+<style>
+    /* ===== AUTOCOMPLETE UI ===== */
+    .autocomplete-box {
+        position: relative;
+    }
+
+    .suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        max-height: 260px;
+        overflow-y: auto;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        z-index: 1000;
+        display: none;
+    }
+
+    .suggestion-item {
+        padding: 10px 14px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+        .suggestion-item:hover {
+            background: #f1f7f6;
+        }
+
+    .suggestion-empty {
+        padding: 10px 14px;
+        color: #888;
+    }
+</style>
+
+<div class="card-box">
+
+    <h3 class="page-title">Add Medication to @pharmacy?.Name</h3>
+
+    <form asp-action="Create" method="post" autocomplete="off">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="PharmacyId" />
+
+        <input type="hidden" asp-for="MedicationId" id="MedicationId" />
+
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+        <div class="mb-3 autocomplete-box">
+            <label class="form-label">Medication</label>
+            <input type="text"
+                   id="medSearch"
+                   class="form-control"
+                   placeholder="Start typing medication name..."
+                   required />
+
+            <div id="suggestions" class="suggestions"></div>
+
+            <span asp-validation-for="MedicationId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Quantity</label>
+            <input asp-for="Quantity"
+                   type="number"
+                   class="form-control"
+                   min="1"
+                   required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Expiry Date</label>
+            <input asp-for="ExpiryDate"
+                   type="date"
+                   class="form-control" />
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Price</label>
+            <input asp-for="Price"
+                   type="number"
+                   step="0.01"
+                   min="0.01"
+                   class="form-control"
+                   required />
+        </div>
+
+        <button type="submit" class="btn btn-primary-soft">
+            Save
+        </button>
+
+        <a asp-controller="Pharmacies"
+           asp-action="Dashboard"
+           class="btn btn-secondary ms-2">
+            Back to Dashboard
+        </a>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        const meds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(meds));
+
+        const input = document.getElementById("medSearch");
+        const suggestionsBox = document.getElementById("suggestions");
+        const hiddenId = document.getElementById("MedicationId");
+
+        input.addEventListener("input", function () {
+            const query = this.value.toLowerCase();
+            suggestionsBox.innerHTML = "";
+            hiddenId.value = "";
+
+            if (query.length < 2) {
+                suggestionsBox.style.display = "none";
+                return;
+            }
+
+            const matches = meds
+                .filter(m => m.Name.toLowerCase().includes(query)) 
+                .slice(0, 15);
+
+            if (matches.length === 0) {
+                suggestionsBox.innerHTML =
+                    `<div class="suggestion-empty">No medications found</div>`;
+            } else {
+                matches.forEach(m => {
+                    const div = document.createElement("div");
+                    div.className = "suggestion-item";
+                    div.textContent = m.Name; 
+                    div.onclick = () => {
+                        input.value = m.Name;
+                        hiddenId.value = m.Id; 
+                        suggestionsBox.style.display = "none";
+                    };
+                    suggestionsBox.appendChild(div);
+                });
+            }
+
+            suggestionsBox.style.display = "block";
+        });
+
+        document.addEventListener("click", function (e) {
+            if (!e.target.closest(".autocomplete-box")) {
+                suggestionsBox.style.display = "none";
+            }
+        });
+    </script>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
